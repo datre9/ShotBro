@@ -340,7 +340,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4374329462642680407, guid: e1133fa71af59324dac91a148f10e4e9, type: 3}
       propertyPath: m_GravityScale
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6574562894720911545, guid: e1133fa71af59324dac91a148f10e4e9, type: 3}
       propertyPath: m_LocalPosition.x
