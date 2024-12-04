@@ -1,68 +1,78 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerController : MonoBehaviour {
-	Vector2 moveInput;
+[RequireComponent(typeof(Rigidbody2D), typeof(Animator))]
+public class PlayerMovement : MonoBehaviour {
 	public float moveSpeed = 5f;
 
-	private bool _isMoving = false;
+	public float recoilForce = 10;
+	public float recoilDuration = 0.1f;
 
-	public bool isMoving {
-		get {
-			return _isMoving;
-		}
-		private set {
-			_isMoving = value;
-			animator.SetBool(AnimationStrings.isMoving, value);
-		}
-	}
+	private Vector2 moveInput;
+	private float recoilTimer;
+	private Rigidbody2D rb;
+	private Animator animator;
 
-	public bool _isFacingRight = true;
-
-	public bool isFacingRight {
-		get { return _isFacingRight; }
-		private set {
-			if (_isFacingRight != value) {
-				transform.localScale *= new Vector2(-1, 1);
-			}
-			_isFacingRight = value;
-
-		}
-	}
-
-	Rigidbody2D rb;
-	Animator animator;
+	private bool isFacingRight = true;
 
 	private void Awake() {
 		rb = GetComponent<Rigidbody2D>();
 		animator = GetComponent<Animator>();
 	}
 
-	void Start() {
-
+	private void Update() {
+		HandleMovement();
+		UpdateAnimator();
 	}
 
-	void Update() {
-
+	private void FixedUpdate() {
+		if (recoilTimer <= 0) {
+			Vector2 targetVelocity = new Vector2(moveInput.x * moveSpeed, rb.velocity.y);
+			rb.velocity = targetVelocity;
+		} else {
+			recoilTimer -= Time.fixedDeltaTime;
+		}
 	}
 
-	void FixedUpdate() {
-		rb.velocity = new Vector2(moveInput.x * moveSpeed, rb.velocity.y);
+	private void HandleMovement() {
+		if (rb.velocity.x > 0.1f && !isFacingRight) {
+			Flip();
+		} else if (rb.velocity.x < -0.1f && isFacingRight) {
+			Flip();
+		}
+	}
+
+
+	private void Flip() {
+		isFacingRight = !isFacingRight;
+		Vector3 scale = transform.localScale;
+		scale.x *= -1;
+		transform.localScale = scale;
+	}
+
+	private void UpdateAnimator() {
+		animator.SetBool(AnimationStrings.isMoving, Math.Abs(moveInput.x) > 0.1f);
 	}
 
 	public void OnMove(InputAction.CallbackContext context) {
 		moveInput = context.ReadValue<Vector2>();
-
-		isMoving = moveInput != Vector2.zero;
-
-		SetFacingDirection(moveInput);
 	}
 
-	private void SetFacingDirection(Vector2 moveInput) {
-		if (!isFacingRight && moveInput.x > 0) {
-			isFacingRight = true;
-		} else if (isFacingRight && moveInput.x < 0) {
-			isFacingRight = false;
+	public void OnShoot(InputAction.CallbackContext context) {
+		if (context.started) {
+			Vector2 shootDirection = context.ReadValue<Vector2>();
+			if (shootDirection != Vector2.zero) {
+				Shoot(shootDirection.normalized);
+			}
 		}
+	}
+
+	private void Shoot(Vector2 direction) {
+		rb.velocity = -direction * recoilForce;
+		recoilTimer = recoilDuration;
+
+		//TODO: shoot animations
+		//animator.SetTrigger("shoot");
 	}
 }
