@@ -7,7 +7,7 @@ public class PlayerMovement : MonoBehaviour {
 	public float moveSpeed = 5f;
 
 	public float recoilForce = 10;
-	public float recoilDuration = 0.1f;
+	public float recoilDuration = 0.5f;
 
 	private Vector2 moveInput;
 	private float recoilTimer;
@@ -60,7 +60,7 @@ public class PlayerMovement : MonoBehaviour {
 	}
 
 	public void OnShoot(InputAction.CallbackContext context) {
-		if (context.started) {
+		if (context.started && recoilTimer <= 0) {
 			Vector2 shootDirection = context.ReadValue<Vector2>();
 			if (shootDirection != Vector2.zero) {
 				Shoot(shootDirection.normalized);
@@ -74,5 +74,23 @@ public class PlayerMovement : MonoBehaviour {
 
 		//TODO: shoot animations
 		//animator.SetTrigger("shoot");
+	}
+
+	public void OnSwitch(InputAction.CallbackContext context) {
+		float weapon = context.ReadValue<float>();
+		if (context.started) {
+			switch(weapon) {
+				case 1f:
+					//shotgun
+					recoilForce = 10f;
+					recoilDuration = 0.5f;
+					break;
+				case 2f:
+					//assault rifle
+					recoilForce = 5f;
+					recoilDuration = 0.3f;
+					break;
+			}
+		}
 	}
 }
