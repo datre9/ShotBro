@@ -43,7 +43,6 @@ public class PlayerMovement : MonoBehaviour {
 		}
 	}
 
-
 	private void Flip() {
 		isFacingRight = !isFacingRight;
 		Vector3 scale = transform.localScale;
@@ -56,7 +55,11 @@ public class PlayerMovement : MonoBehaviour {
 	}
 
 	public void OnMove(InputAction.CallbackContext context) {
-		moveInput = context.ReadValue<Vector2>();
+		if (rb.velocity.y == 0) {
+			moveInput = context.ReadValue<Vector2>();
+		} else {
+			moveInput = Vector2.zero;
+		}
 	}
 
 	public void OnShoot(InputAction.CallbackContext context) {
@@ -72,7 +75,11 @@ public class PlayerMovement : MonoBehaviour {
 		rb.velocity = -direction * recoilForce;
 		recoilTimer = recoilDuration;
 
+		//after shooting while holding a movement direction, player could still move with A and D
+		moveInput = Vector2.zero;
+
 		//TODO: shoot animations
+		//scale animation size with recoilForce and recoilDuration?
 		//animator.SetTrigger("shoot");
 	}
 
