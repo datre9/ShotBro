@@ -5,16 +5,20 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Rigidbody2D), typeof(Animator))]
 public class PlayerMovement : MonoBehaviour {
 	public float moveSpeed = 5f;
-
 	public float recoilForce = 10;
 	public float recoilDuration = 0.5f;
 
 	private Vector2 moveInput;
 	private float recoilTimer;
+	private bool isFacingRight = true;
+
 	private Rigidbody2D rb;
 	private Animator animator;
 
-	private bool isFacingRight = true;
+	public LayerMask groundLayer;
+	public Transform groundCheck;
+	private bool isGrounded;
+
 
 	private void Awake() {
 		rb = GetComponent<Rigidbody2D>();
@@ -22,6 +26,7 @@ public class PlayerMovement : MonoBehaviour {
 	}
 
 	private void Update() {
+		isGrounded = Physics2D.OverlapCircle(groundCheck.position, 0.1f, groundLayer);
 		HandleMovement();
 		UpdateAnimator();
 	}
@@ -55,7 +60,7 @@ public class PlayerMovement : MonoBehaviour {
 	}
 
 	public void OnMove(InputAction.CallbackContext context) {
-		if (rb.velocity.y == 0) {
+		if (isGrounded) {
 			moveInput = context.ReadValue<Vector2>();
 		} else {
 			moveInput = Vector2.zero;
@@ -86,7 +91,7 @@ public class PlayerMovement : MonoBehaviour {
 	public void OnSwitch(InputAction.CallbackContext context) {
 		float weapon = context.ReadValue<float>();
 		if (context.started) {
-			switch(weapon) {
+			switch (weapon) {
 				case 1f:
 					//shotgun
 					recoilForce = 10f;

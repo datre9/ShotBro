@@ -273,7 +273,7 @@ GameObject:
   - component: {fileID: 791204442}
   - component: {fileID: 791204441}
   - component: {fileID: 791204440}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Tilemap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
