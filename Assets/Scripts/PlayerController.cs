@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -18,6 +19,7 @@ public class PlayerMovement : MonoBehaviour {
 	public LayerMask groundLayer;
 	public Transform groundCheck;
 	private bool isGrounded;
+	private bool isShooting = false;
 
 
 	private void Awake() {
@@ -68,11 +70,23 @@ public class PlayerMovement : MonoBehaviour {
 	}
 
 	public void OnShoot(InputAction.CallbackContext context) {
-		if (context.started && recoilTimer <= 0) {
-			Vector2 shootDirection = context.ReadValue<Vector2>();
-			if (shootDirection != Vector2.zero) {
-				Shoot(shootDirection.normalized);
+		if (context.started) {
+			isShooting = true;
+			StartCoroutine(ShootingRoutine(context));
+		} else if (context.canceled) {
+			isShooting = false;
+		}
+	}
+
+	private IEnumerator ShootingRoutine(InputAction.CallbackContext context) {
+		while (isShooting) {
+			if (recoilTimer <= 0) {
+				Vector2 shootDirection = context.ReadValue<Vector2>();
+				if (shootDirection != Vector2.zero) {
+					Shoot(shootDirection.normalized);
+				}
 			}
+			yield return null;
 		}
 	}
 
