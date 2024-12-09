@@ -116,6 +116,11 @@ public class PlayerMovement : MonoBehaviour {
 					recoilForce = 5f;
 					recoilDuration = 0.3f;
 					break;
+				case 3f:
+					//sniper rifle
+					recoilForce = 20f;
+					recoilDuration = 2.0f;
+					break;
 			}
 		}
 	}
