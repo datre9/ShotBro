@@ -10,6 +10,17 @@ public class CameraManager : MonoBehaviour {
 
 	private CinemachineVirtualCamera currentCam;
 
+	public static CameraManager instance { get; private set; }
+
+	private void Awake() {
+		if (instance != null && instance != this) {
+			Destroy(gameObject);
+			return;
+		}
+		instance = this;
+		DontDestroyOnLoad(gameObject);
+	}
+
 	void Start() {
 		currentCam = startCam;
 
