@@ -113,13 +113,13 @@ public class PlayerMovement : MonoBehaviour {
 					break;
 				case 2f:
 					//assault rifle
-					recoilForce = 5f;
-					recoilDuration = 0.3f;
+					recoilForce = 4f;
+					recoilDuration = 0.2f;
 					break;
 				case 3f:
 					//sniper rifle
 					recoilForce = 20f;
-					recoilDuration = 2.0f;
+					recoilDuration = 1.5f;
 					break;
 			}
 		}
