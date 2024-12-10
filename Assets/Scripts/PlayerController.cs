@@ -123,5 +123,6 @@ public class PlayerMovement : MonoBehaviour {
 					break;
 			}
 		}
+		recoilTimer = 0;
 	}
 }
