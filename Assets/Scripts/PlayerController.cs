@@ -97,9 +97,15 @@ public class PlayerMovement : MonoBehaviour {
 		//after shooting while holding a movement direction, player could still move with A and D
 		moveInput = Vector2.zero;
 
-		//TODO: shoot animations
-		//scale animation size with recoilForce and recoilDuration?
-		//animator.SetTrigger("shoot");
+		//shoot down is default
+		if (direction.y > 0) {
+			animator.SetTrigger("up");
+		} else if (direction.x > 0) {
+			animator.SetTrigger("right");
+		} else if (direction.x < 0) {
+			animator.SetTrigger("left");
+		}
+		animator.SetTrigger("shoot");
 	}
 
 	public void OnSwitch(InputAction.CallbackContext context) {
