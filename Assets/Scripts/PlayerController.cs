@@ -21,6 +21,9 @@ public class PlayerMovement : MonoBehaviour {
 	private bool isGrounded;
 	private bool isShooting = false;
 
+	public bool hasRifle = false;
+	public bool hasSniper = false;
+
 
 	private void Awake() {
 		rb = GetComponent<Rigidbody2D>();
@@ -119,13 +122,17 @@ public class PlayerMovement : MonoBehaviour {
 					break;
 				case 2f:
 					//assault rifle
-					recoilForce = 4f;
-					recoilDuration = 0.2f;
+					if (hasRifle) {
+						recoilForce = 4f;
+						recoilDuration = 0.2f;
+					}
 					break;
 				case 3f:
 					//sniper rifle
-					recoilForce = 20f;
-					recoilDuration = 1.5f;
+					if (hasSniper) {
+						recoilForce = 20f;
+						recoilDuration = 1.5f;
+					}
 					break;
 			}
 		}
