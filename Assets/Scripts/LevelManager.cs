@@ -5,10 +5,12 @@ using UnityEngine;
 public class LevelManager : MonoBehaviour {
 	public GameObject player;
 
+	[Header("Camera settings")]
 	public CinemachineVirtualCamera[] cameras;
 	public CinemachineVirtualCamera startCam;
 	private CinemachineVirtualCamera currentCam;
 
+	[Header("Respawn settings")]
 	public GameObject[] respawns;
 	public GameObject startRespawn;
 	private GameObject currentRespawn;

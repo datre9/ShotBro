@@ -5,9 +5,9 @@ using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(Animator))]
 public class PlayerMovement : MonoBehaviour {
-	public float moveSpeed = 5f;
-	public float recoilForce = 10;
-	public float recoilDuration = 0.5f;
+	private float moveSpeed = 5f;
+	private float recoilForce = 10;
+	private float recoilDuration = 0.5f;
 
 	private Vector2 moveInput;
 	private float recoilTimer;

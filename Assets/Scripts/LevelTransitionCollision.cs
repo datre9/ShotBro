@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LevelTransitionCollision : MonoBehaviour
 {
-	public LevelManager cameraManager;
+	private LevelManager cameraManager;
 
 	void Start() {
 		cameraManager = LevelManager.instance;
