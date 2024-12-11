@@ -39,10 +39,7 @@ public class LevelManager : MonoBehaviour {
 
 	void Update() {
 		if (Input.GetKeyDown(KeyCode.R)) {
-			player.transform.position = new Vector3(
-				currentRespawn.transform.position.x,
-				currentRespawn.transform.position.y,
-				currentRespawn.transform.position.z);
+			RespawnPlayer();
 		}
 	}
 
@@ -64,5 +61,12 @@ public class LevelManager : MonoBehaviour {
 		if (currentRespawn != respawns[respawns.Length - 1]) {
 			currentRespawn = respawns[Array.IndexOf(respawns, currentRespawn) + 1];
 		}
+	}
+
+	public void RespawnPlayer() {
+		player.transform.position = new Vector3(
+			currentRespawn.transform.position.x,
+			currentRespawn.transform.position.y,
+			currentRespawn.transform.position.z);
 	}
 }
