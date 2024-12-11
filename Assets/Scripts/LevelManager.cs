@@ -40,6 +40,7 @@ public class LevelManager : MonoBehaviour {
 	void Update() {
 		if (Input.GetKeyDown(KeyCode.R)) {
 			RespawnPlayer();
+			//TODO: reset moving obstacles
 		}
 	}
 
