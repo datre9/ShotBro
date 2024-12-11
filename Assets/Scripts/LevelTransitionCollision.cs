@@ -1,9 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class LevelTransitionCollision : MonoBehaviour
-{
+public class LevelTransitionCollision : MonoBehaviour {
 	private LevelManager levelManager;
 
 	void Start() {

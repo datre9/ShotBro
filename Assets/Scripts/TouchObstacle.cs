@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TouchObstacle : MonoBehaviour
-{
+public class TouchObstacle : MonoBehaviour {
 	private LevelManager levelManager;
 
 	void Start() {
